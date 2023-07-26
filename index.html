@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
  <head>
-     <title>Title Case</title>
+     <title>Get Even</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/nav.css">
   <link rel="stylesheet" href="css/forms.css">
   <style>
-    #output{
+    #container{
        border-radius: 5px;
        min-height: 40px;
        border: 1px solid black;
@@ -16,20 +16,20 @@
        width: 50%;
        font-size: large;
     }
-    .subheader{
-      text-align: center;
-
-    }
-
+    
     .description{
       text-align: center;
-      
+    }  
+    .instructions{ 
+      text-align: center;
+    
+    
     }
   </style>
  </head>
  <body>
      <header>
-     <h1 class="page-header">Title Case</h1>
+     <h1 class="page-header">Get Even</h1>
         <nav class="topnav" id="myTopnav">
             <a href="index.html" class="active">Home</a>
             <a href="#">Link</a>
@@ -39,24 +39,20 @@
      </header>
      
    <main class="wrapper">
- 
-    <h2 class="subheader">Single Word Converter </h2>
-    <div id="output">Output goes here </div>
-    <p class="description"> Below, we have used JavaScript to be able to convert a single word to have it so the first letter is upper case and the rest of the letter is lower case. Test it out by putting a word into the input box!</p>
-    <form method="post" action="" class="main-form" >
-
+    <p class="instructions"> We created a function that can read your number if it is an odd or even using JavaScript
+    <p class="instructions">Put a number in and try it out </p>
+  </p>
+    <div id="output">
+    <form method="get" action="" class="main-form" >
       <div>
         <label for="input">input</label> <br>
         <input type="text" name="input" id="input" placeholder="input" required autofocus>
-      </div>
-
-
+        </div>
       <div> 
         <input type="submit" id="submit">
       <div>
-     
-
     </form>
+    </div>
 
     <h3>Page Origins</h3>
     <p>The HTML/CSS comes from Sara Newman's Web Fundamentals class as taught at Seattle Central. This page provides a basis for students to build a responsive portal page.</p>
@@ -69,26 +65,43 @@
      </p>
     </footer>
   </main>
+
   <script src="js/main.js"></script>   
   <script>
-
-    function titleCase(str){
-      return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    
+    function getEven(num){
       
+        if(num % 2 ==0 ){//even!
+            return true;
+        }else{//odd!
+            return false;
+    }
+  }
+    const queryString = window.location.search;
+    console.log(queryString);
 
+    const urlParams = new URLSearchParams(queryString);
+     
+    if(queryString.length > 0){ //data submitted 
+      
+      let myOutput = `<div id="container"`;
+        if(urlParams.has("input")){
+          //alert(urlParams.get("input"));
+          let myInput = urlParams.get("input");
+
+          if(getEven(myInput)){//even
+            myOutput += `<p> you typed <b>${myInput}</b> and it's an even number</p>`;
+          }else{//odd
+            myOutput += `<p> you typed <b>${myInput}</b> and it's an odd number</p>`;
+
+          }
+          myOutput += `<p> You typed ${myInput} </p>`; 
+        }
+        myOutput += `<p><a href ="index.html">CLEAR</p> `;
+        myOutput += `</div>`;
+        document.querySelector("#output").innerHTML = myOutput
     }
 
-    const mySubmit = document.querySelector("#submit");
-    console.log(mySubmit);
-
-    mySubmit.addEventListener("click",function(ev){
-      ev.preventDefault();
-      const myInput = document.querySelector("#input");
-      const myOutput = document.querySelector("#output");
-      myOutput.innerHTML=titleCase(myInput.value);
-      //alert(myInput.value);
-
-    });
   </script>
  </body>
 </html>
